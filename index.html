@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1324" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Knee Rehab" />
+  <title>Knee Rehab + Upper — 12 tjedana</title>
+  <style>
+    :root{
+      --bg:#08101f;--panel:#101b30;--panel2:#14223b;--line:#263653;--text:#edf3ff;
+      --muted:#9fb0ca;--brand:#6ee7b7;--brand2:#38bdf8;--warn:#fbbf24;--danger:#fb7185;
+      --ok:#34d399;--shadow:0 18px 60px rgba(0,0,0,.28);--radius:18px;
+    }
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(145deg,#050a14,#0a1425 48%,#07101c);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    button,input,select,textarea{font:inherit} button{cursor:pointer}
+    .app{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+    .sidebar{position:sticky;top:0;height:100vh;padding:24px 18px;border-right:1px solid var(--line);background:rgba(7,14,27,.9);backdrop-filter:blur(18px)}
+    .brand{display:flex;gap:12px;align-items:center;margin:2px 8px 30px}.brand-mark{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 0 30px rgba(56,189,248,.24)}
+    .brand h1{font-size:16px;margin:0}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+    nav{display:grid;gap:8px}.nav-btn{border:0;background:transparent;color:var(--muted);padding:12px 14px;border-radius:12px;text-align:left;display:flex;align-items:center;gap:11px;font-weight:700}.nav-btn:hover{background:#111f37;color:#fff}.nav-btn.active{background:linear-gradient(90deg,rgba(110,231,183,.16),rgba(56,189,248,.08));color:#fff;box-shadow:inset 3px 0 var(--brand)}
+    .nav-dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.8}.sidebar-foot{position:absolute;left:18px;right:18px;bottom:18px;color:var(--muted);font-size:11px;line-height:1.5}
+    main{padding:28px;max-width:1450px;width:100%;margin:0 auto}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.eyebrow{font-size:12px;color:var(--brand);text-transform:uppercase;letter-spacing:.12em;font-weight:900}.title{font-size:30px;margin:5px 0 0;line-height:1.1}.top-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{border:1px solid var(--line);background:#13213a;color:#fff;border-radius:12px;padding:10px 14px;font-weight:800;box-shadow:none}.btn:hover{border-color:#3c547d}.btn.primary{background:linear-gradient(135deg,#10b981,#0ea5e9);border:0;color:#04111d}.btn.danger{color:#fecdd3;border-color:#7f1d1d;background:#2a1018}.btn.small{padding:7px 10px;font-size:12px}
+    .grid{display:grid;gap:16px}.grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card{background:linear-gradient(160deg,rgba(20,34,59,.95),rgba(13,24,43,.95));border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .metric{min-height:126px;position:relative;overflow:hidden}.metric:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-35px;bottom:-45px;background:rgba(110,231,183,.06)}.metric-label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}.metric-value{font-size:29px;font-weight:900;margin-top:10px}.metric-note{font-size:12px;color:var(--muted);margin-top:6px}.progress{height:8px;background:#0a1425;border-radius:999px;overflow:hidden;margin-top:14px}.progress > span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:999px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:26px 0 12px}.section-head h2{margin:0;font-size:19px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .week-strip{display:grid;grid-template-columns:repeat(12,1fr);gap:7px}.week-btn{padding:11px 4px;border-radius:10px;border:1px solid var(--line);background:#101b30;color:var(--muted);font-weight:900}.week-btn.active{background:linear-gradient(135deg,rgba(110,231,183,.22),rgba(56,189,248,.18));color:#fff;border-color:#4a7892}.week-btn.done:after{content:"✓";display:block;color:var(--brand);font-size:10px;margin-top:2px}
+    .session-card{display:flex;flex-direction:column;min-height:235px}.session-tag{font-size:11px;color:var(--brand2);font-weight:900;text-transform:uppercase;letter-spacing:.08em}.session-card h3{font-size:17px;margin:8px 0 6px}.session-date{font-size:12px;color:var(--muted)}.exercise-preview{margin:15px 0 18px;display:grid;gap:7px;font-size:12px;color:#c7d3e6}.exercise-preview span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.session-card .btn{margin-top:auto;width:100%}.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 8px;border-radius:999px;background:#0a1425;color:var(--muted);border:1px solid var(--line)}.status-pill.done{color:#a7f3d0;border-color:#166534;background:#092619}
+    .notice{padding:14px 16px;border-radius:14px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);color:#fde68a;font-size:13px;line-height:1.55}
+    .hidden{display:none!important}.workout-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px}.exercise-card{padding:0;overflow:hidden}.exercise-head{padding:15px 17px;display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line)}.exercise-name{font-weight:900}.exercise-meta{font-size:11px;color:var(--muted);margin-top:4px}.sets{padding:10px 17px 17px}.set-row{display:grid;grid-template-columns:62px 1fr 1fr 90px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(38,54,83,.65)}.set-row:last-child{border-bottom:0}.set-label{font-size:12px;color:var(--muted);font-weight:800}.field{width:100%;background:#081426;color:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 11px;outline:none}.field:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.1)}.field::placeholder{color:#53657f}.target-chip{font-size:11px;color:#b8c7dc;background:#0b1729;border:1px solid var(--line);padding:7px 8px;border-radius:9px;text-align:center}.check{width:20px;height:20px;accent-color:#10b981}.side-panel{position:sticky;top:20px;height:max-content}.form-group{margin-bottom:13px}.form-group label{display:block;color:var(--muted);font-size:12px;font-weight:800;margin:0 0 6px}.range-line{display:grid;grid-template-columns:1fr 54px;gap:10px;align-items:center}.range-line input[type=range]{width:100%;accent-color:#10b981}.range-value{text-align:center;background:#081426;border:1px solid var(--line);padding:8px;border-radius:9px;font-weight:900}.summary-box{background:#081426;border:1px solid var(--line);padding:12px;border-radius:12px;font-size:12px;color:var(--muted);line-height:1.55;margin:14px 0}.summary-box strong{color:#fff}
+    .criteria-card h3{margin:0 0 4px}.criteria-card p{color:var(--muted);font-size:13px;line-height:1.5}.criteria-list{display:grid;gap:10px;margin-top:14px}.criterion{display:grid;grid-template-columns:24px 1fr 130px;gap:10px;align-items:center;padding:12px;background:#0b1729;border:1px solid var(--line);border-radius:12px}.criterion input[type=checkbox]{width:19px;height:19px;accent-color:#10b981}.criterion-name{font-weight:800;font-size:13px}.criterion small{display:block;color:var(--muted);margin-top:3px}.phase-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.phase-node{padding:9px 11px;border-radius:11px;background:#0a1425;border:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:900}.phase-node.active{color:#052018;background:var(--brand);border-color:transparent}.phase-arrow{color:#4c6280}.table-wrap{overflow:auto}.history-table{width:100%;border-collapse:collapse;font-size:12px}.history-table th,.history-table td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.history-table th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.empty{padding:36px;text-align:center;color:var(--muted)}
+    .modal{position:fixed;inset:0;background:rgba(1,5,12,.78);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}.modal-card{max-width:560px;width:100%;max-height:90vh;overflow:auto;background:#101b30;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 30px 100px rgba(0,0,0,.5)}.modal-card h2{margin-top:0}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.muted{color:var(--muted)}
+    @media(max-width:1050px){.grid.cols-4{grid-template-columns:repeat(2,1fr)}.workout-layout{grid-template-columns:1fr}.side-panel{position:static}.app{grid-template-columns:84px 1fr}.sidebar{padding:20px 10px}.brand h1,.brand small,.nav-btn span,.sidebar-foot{display:none}.brand{justify-content:center;margin:2px 0 25px}.nav-btn{justify-content:center;padding:13px}.week-strip{grid-template-columns:repeat(6,1fr)}}
+    @media(max-width:720px){main{padding:18px 13px 90px}.app{display:block}.sidebar{position:fixed;z-index:50;left:0;right:0;bottom:0;top:auto;height:auto;border:0;border-top:1px solid var(--line);padding:8px;background:#08101f}.brand,.sidebar-foot{display:none}nav{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}.nav-btn{padding:8px 3px;display:grid;justify-items:center;gap:4px;font-size:9px;border-radius:8px}.nav-btn span{display:block}.nav-dot{width:6px;height:6px}.title{font-size:23px}.topbar{align-items:flex-start}.top-actions{justify-content:flex-end}.grid.cols-4,.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}.week-strip{grid-template-columns:repeat(4,1fr)}.set-row{grid-template-columns:42px 1fr 1fr 62px;gap:6px}.target-chip{padding:7px 3px}.criterion{grid-template-columns:22px 1fr}.criterion .field{grid-column:2}.hide-mobile{display:none}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark"></div><div><h1>Knee Rehab + Upper</h1><small>12-tjedni tracker</small></div></div>
+    <nav>
+      <button class="nav-btn active" data-view="dashboard"><i class="nav-dot"></i><span>Plan</span></button>
+      <button class="nav-btn" data-view="workout"><i class="nav-dot"></i><span>Trening</span></button>
+      <button class="nav-btn" data-view="criteria"><i class="nav-dot"></i><span>Faze</span></button>
+      <button class="nav-btn" data-view="history"><i class="nav-dot"></i><span>Povijest</span></button>
+      <button class="nav-btn" data-view="settings"><i class="nav-dot"></i><span>Postavke</span></button>
+    </nav>
+    <div class="sidebar-foot">Podaci ostaju lokalno u tvom pregledniku. Napravi povremeni JSON backup.</div>
+  </aside>
+
+  <main>
+    <section id="dashboardView"></section>
+    <section id="workoutView" class="hidden"></section>
+    <section id="criteriaView" class="hidden"></section>
+    <section id="historyView" class="hidden"></section>
+    <section id="settingsView" class="hidden"></section>
+  </main>
+</div>
+<div id="modalRoot"></div>
+<script>
+'use strict';
+const STORAGE_KEY='kneeRehabUpperV1';
+const DAY_MS=86400000;
+
+const rehabPhases={
+  phase2:{id:'phase2',name:'Early Stage — Phase 2',order:2,minWeeks:1,next:'phase3',dayMode:'same',days:[[
+    ['Bike','3–5 min','time',1,true],['Hamstring Flossing','15 pon.','reps',1],['DL Wall Squat','15 pon.','reps',1],
+    ['Rectus Femoris Iso','60 s','seconds',1],['Terminal Knee Extension','2 × 15','reps',2],['A-Walk with Rotation','2 × 15','reps',2],
+    ['SL Wall Sit','1 × 60 s','seconds',1],['SL Wall Squat','3 × 6','reps',3],['Spanish Squat Iso','1 × 60 s','seconds',1]
+  ]],criteria:[
+    {id:'p2_time',label:'Najmanje 1 tjedan u Phase 2',type:'auto'},
+    {id:'p2_1',label:'Single Leg Wall Sit — 60 s na 90°',target:'60 s'},
+    {id:'p2_2',label:'SL Wall Squat — 3 × 6 do 90°',target:'3 × 6'},
+    {id:'p2_3',label:'Spanish Squat — 60 s na 90°',target:'60 s'},
+    {id:'p2_pain',label:'Bez povećanja boli tijekom i nakon testa',target:'DA'}
+  ]},
+  phase3:{id:'phase3',name:'Early Stage — Phase 3',order:3,minWeeks:1,next:'phase4',dayMode:'same',days:[[
+    ['Bike','3–5 min','time',1,true],['Hamstring Flossing','15 pon.','reps',1],['DL Wall Squat','20 pon.','reps',1],
+    ['Elephant TKE','2 × 15','reps',2],['A-Walk with Medball','2 × 15','reps',2],['SL Wall Sit','1 × 90 s','seconds',1],
+    ['Slouching Split Squat','3 × 8','reps',3],['Foam Roller Bridge Oscillations','2 × 30 s','seconds',2],['Iso Lunge','45 s svaka strana','seconds',1]
+  ]],criteria:[
+    {id:'p3_time',label:'Najmanje 1 tjedan u Phase 3',type:'auto'},
+    {id:'p3_1',label:'Single Leg Wall Sit — 90 s',target:'90 s'},
+    {id:'p3_2',label:'Slouching Split Squat — 3 × 8',target:'3 × 8'},
+    {id:'p3_3',label:'Iso Lunge — 45 s svaka strana',target:'45 s'},
+    {id:'p3_pain',label:'Bez povećanja boli tijekom i nakon testa',target:'DA'}
+  ]},
+  phase4:{id:'phase4',name:'Mid Stage — Phase 4',order:4,minWeeks:2,next:'phase5',dayMode:'three',days:[
+    [ ['Bike','3–5 min','time',1,true],['Step Up To TKE','2 × 12','reps',2],['Reverse Lunge To Hip Lock','2 × 4','reps',2],['Leg Extension Iso','2 × 30 s','seconds',2],['SL Partial Leg Extension','3 × 8','reps',3],['Short Split Squat','3 × 6','reps',3],['SL Glute Bridge','2 × 8','reps',2],['Iso Lunge','30 s; napreduj do +50% BW','seconds',1] ],
+    [ ['Wall Stride Iso','1 × 30 s','seconds',1],['Positive Shin Wall Sit','3 × 30 s','seconds',3],['RDL Iso','1 × 30 s','seconds',1],['Sidelying Hip Thrust','10 pon. + 10 s iso','reps',1] ],
+    [ ['Bike','3–5 min','time',1,true],['Band Assisted Reverse Nordic','2 × 8','reps',2],['Walking Lunge with Rotation','2 × 15','reps',2],['Rectus Femoris Iso','5 × 10 s maksimalni pritisak','seconds',5],['SL Leg Press','3 × 8','reps',3],['Kickstand Hinge','3 × 8','reps',3],['Hamstring Curl','2 × 8','reps',2],['Iso Lunge','1 × 2 min','seconds',1] ]
+  ],criteria:[
+    {id:'p4_time',label:'Najmanje 2 tjedna u Mid Stage',type:'auto'},
+    {id:'p4_1',label:'Partial Leg Extension — 3 × 8 @ 50% tjelesne težine',target:'3 × 8'},
+    {id:'p4_2',label:'SL Leg Press — 3 × 8 @ 1,5 × tjelesna težina',target:'3 × 8'},
+    {id:'p4_3',label:'Iso Lunge — 30 s s dodatnih 50% tjelesne težine',target:'30 s'},
+    {id:'p4_4',label:'Iso Lunge — jedan neprekinuti hold od 2 min',target:'120 s'},
+    {id:'p4_pain',label:'Bez povećanja boli tijekom i nakon testa',target:'DA'}
+  ]},
+  phase5:{id:'phase5',name:'Late Stage — Phase 5',order:5,minWeeks:0,next:null,dayMode:'three',days:[
+    [ ['Bike','3–5 min','time',1,true],['Rectus Femoris Iso','12 × 3 s maksimalni pritisak','seconds',12],['SL Spanish Squat To Box','2 × 10','reps',2],['Walking Lunge To Hip Lock','2 × 15','reps',2],['RDL','3 × 6','reps',3],['Bulgarian Split Squat','3 × 5','reps',3],['SL Glute Bridge','2 × 8','reps',2],['Iso Lunge','2 × 30 s @ +100% BW','seconds',2] ],
+    [ ['SL Wall Stride Iso','1 × 45 s','seconds',1],['RDL Iso','1 × 45 s','seconds',1],['SL Wall Sit — Positive Shin','3 × 45 s','seconds',3],['Sidelying Hip Thrust','15 pon. + 15 s iso','reps',1] ],
+    [ ['Bike','3–5 min','time',1,true],['Reverse Nordic','2 × 8','reps',2],['Low Box Lunge','2 × 8','reps',2],['Overcoming Iso Lunge','4 × 10 s','seconds',4],['Front Squat','3 × 6','reps',3],['2 Up — 1 Down Leg Extension','3 × 5','reps',3],['Nordic Curl','2 × 5','reps',2],['Wall Squat — Positive Shin','3 × 5','reps',3] ]
+  ],criteria:[]}
+};
+
+const plyoLevels={
+  1:[['Band Assisted DL Pogo','3 × 20'],['DL Tall To Short','1 × 10']],
+  2:[['DL Pogo','3 × 15'],['SL Tall To Short','1 × 8'],['Box Jump','1 × 8']],
+  3:[['SL Pogo','2 × 15'],['Approach Box Jump','1 × 9'],['SL Drop Landing','2 × 3'],['Springy Lunge','2 × 5']],
+  4:[['SL Pogo','2 × 10'],['Approach Box Jump','1 × 9'],['SL Box Jump','2 × 5'],['Decel Lunge','2 × 5']],
+  5:[['SL Pogo','1 × 15'],['DL CMJ','1 × 5'],['SL CMJ','2 × 3'],['SL Drop Jump','2 × 5'],['Altitude Drop Lunge Landing','2 × 3']],
+  6:[['SL Pogo','1 × 15'],['SL CMJ','2 × 3'],['SL Drop Jump','2 × 5'],['Weighted Jump','1 × 5 (+10% BW)'],['Altitude Drop Lunge Landing','2 × 3 (+10% BW)']],
+  7:[['SL Pogo','1 × 15'],['Sinky Bound On The Spot','2 × 10'],['Continuous Weighted Jump','2 × 3 (+10% BW)'],['Altitude Drop Lunge Landing','2 × 3 (+15% BW)'],['Sprint To Decel','10 m — 1 × 8 (4 svaka noga)']],
+  8:[['Plyo Level 8','Detalji nisu bili vidljivi na dostavljenim slikama — unesi u Postavkama bilješku ili koristi Level 7 dok ne dopunimo program.']]
+};
+
+const upperTemplates={
+  A:[
+    {id:'machine_chest_press',name:'Machine Chest Press',sets:3,reps:8,increment:5,group:'Prsa'},
+    {id:'chest_supported_row',name:'Chest-Supported Row',sets:3,reps:10,increment:5,group:'Leđa'},
+    {id:'cable_lateral_raise',name:'Cable Lateral Raise',sets:3,reps:10,increment:2.5,group:'Ramena'}
+  ],
+  B:[
+    {id:'neutral_lat_pulldown',name:'Neutral-Grip Lat Pulldown',sets:3,reps:8,increment:5,group:'Leđa'},
+    {id:'incline_db_press',name:'Incline Dumbbell Press',sets:3,reps:10,increment:2.5,group:'Prsa',perHand:true},
+    {id:'preacher_curl',name:'Preacher Curl',sets:3,reps:10,increment:2.5,group:'Biceps'}
+  ],
+  C:[
+    {id:'machine_shoulder_press',name:'Seated Machine Shoulder Press',sets:3,reps:8,increment:5,group:'Ramena'},
+    {id:'seated_cable_row',name:'Seated Cable Row',sets:3,reps:10,increment:5,group:'Leđa'},
+    {id:'rope_pushdown',name:'Rope Triceps Pushdown',sets:3,reps:10,increment:2.5,group:'Triceps'}
+  ],
+  U:[
+    {id:'machine_chest_press',name:'Machine Chest Press',sets:3,reps:8,increment:5,group:'Prsa'},
+    {id:'neutral_lat_pulldown',name:'Neutral-Grip Lat Pulldown',sets:3,reps:8,increment:5,group:'Leđa'},
+    {id:'machine_shoulder_press',name:'Seated Machine Shoulder Press',sets:3,reps:10,increment:5,group:'Ramena'},
+    {id:'seated_cable_row',name:'Seated Cable Row',sets:3,reps:10,increment:5,group:'Leđa'},
+    {id:'preacher_curl',name:'Preacher Curl',sets:3,reps:10,increment:2.5,group:'Biceps'},
+    {id:'rope_pushdown',name:'Rope Triceps Pushdown',sets:3,reps:10,increment:2.5,group:'Triceps'}
+  ]
+};
+
+function defaultState(){
+  const today=new Date();const monday=new Date(today);const dow=(monday.getDay()+6)%7;monday.setDate(monday.getDate()-dow);monday.setHours(0,0,0,0);
+  return {version:1,startDate:dateISO(monday),bodyweight:83,currentWeek:1,currentPhase:'phase2',phaseStartWeek:1,selectedWeek:1,selectedSession:0,weekAutoMode:true,plyoEnabled:false,plyoLevel:1,plyoSuccessCount:0,logs:{},phaseHistory:[{phase:'phase2',week:1,date:new Date().toISOString()}],notes:{level8:''}};
+}
+let state=loadState();
+let currentView='dashboard';
+syncCurrentWeek();
+
+function loadState(){try{return Object.assign(defaultState(),JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}'));}catch(e){return defaultState()}}
+function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+function computeWeekFromDate(){const start=new Date(state.startDate+'T00:00:00');const diff=Math.floor((new Date().setHours(0,0,0,0)-start)/DAY_MS);return Math.min(12,Math.max(1,Math.floor(diff/7)+1));}
+function syncCurrentWeek(save=true){
+  if(!state.weekAutoMode)return;
+  const w=computeWeekFromDate();
+  if(w!==state.currentWeek){
+    const followSelection=state.selectedWeek===state.currentWeek;
+    state.currentWeek=w;
+    if(followSelection)state.selectedWeek=w;
+    if(save)saveState();
+  }
+}
+function dateISO(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function weekDate(week,dayOffset){const d=new Date(state.startDate+'T00:00:00');d.setDate(d.getDate()+(week-1)*7+dayOffset);return d;}
+function fmtDate(d){return d.toLocaleDateString('hr-HR',{weekday:'short',day:'numeric',month:'short'});}
+function phaseForWeek(week){let found=state.phaseHistory[0]?.phase||state.currentPhase;for(const h of [...state.phaseHistory].sort((a,b)=>a.week-b.week)){if(h.week<=week)found=h.phase;}return found;}
+function rehabDayForSession(phaseId,sessionIndex){const p=rehabPhases[phaseId];if(!p)return[];if(sessionIndex===3)return[];if(p.dayMode==='same')return p.days[0];const map={0:0,1:1,2:2};return p.days[map[sessionIndex]]||[];}
+function sessionDef(index){return [
+  {name:'Rehab Day 1 + Upper A',tag:'Ponedjeljak',offset:0,upper:'A'},
+  {name:'Rehab Day 2 + Upper B',tag:'Srijeda',offset:2,upper:'B'},
+  {name:'Rehab Day 3 + Upper C',tag:'Petak',offset:4,upper:'C'},
+  {name:'Upper Body — hipertrofija',tag:'Nedjelja',offset:6,upper:'U'}
+][index];}
+function sessionKey(week,index){return `w${week}s${index}`}
+function completedSession(week,index){return state.logs[sessionKey(week,index)]?.completed===true}
+function lastUpperResult(exerciseId,beforeWeek,beforeSession){let best=null;for(let w=1;w<=12;w++){for(let s=0;s<4;s++){if(w>beforeWeek||(w===beforeWeek&&s>=beforeSession))continue;const log=state.logs[sessionKey(w,s)];if(!log?.completed)continue;const ex=log.exercises?.find(x=>x.id===exerciseId&&x.kind==='upper');if(ex)best=ex;}}return best;}
+function targetWeight(exercise,beforeWeek,beforeSession){const last=lastUpperResult(exercise.id,beforeWeek,beforeSession);if(!last)return null;const firstEntered=last.sets?.find(x=>String(x.weight??'').trim()!=='')?.weight;const rawBase=last.targetWeight??firstEntered;if(rawBase==null||String(rawBase).trim()==='')return null;const base=Number(rawBase);if(!Number.isFinite(base)||base<=0)return null;const valid=last.sets?.length===exercise.sets&&last.sets.every(x=>Number(x.reps)>=exercise.reps&&Number(x.weight)>=base);return valid?base+exercise.increment:base;}
+function targetText(ex,week,session){const w=targetWeight(ex,week,session);return w==null?'početna težina: prazno':`cilj: ${w} kg${ex.perHand?' / bučica':''}`}
+function painDataForCurrentPhase(){let anyLogged=false,anyIncrease=false;for(let w=state.phaseStartWeek;w<=state.currentWeek;w++){for(let s=0;s<4;s++){const log=state.logs[sessionKey(w,s)];if(!log?.completed)continue;anyLogged=true;const before=Number(log.painBefore)||0,during=Number(log.painDuring)||0,after=Number(log.painAfter)||0;if(during>before||after>before)anyIncrease=true;}}return{anyLogged,anyIncrease};}
+
+function render(){syncCurrentWeek();document.querySelectorAll('main > section').forEach(x=>x.classList.add('hidden'));document.getElementById(currentView+'View').classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===currentView));
+  if(currentView==='dashboard')renderDashboard();if(currentView==='workout')renderWorkout();if(currentView==='criteria')renderCriteria();if(currentView==='history')renderHistory();if(currentView==='settings')renderSettings();}
+
+function pageHead(title,sub,actions=''){return `<div class="topbar"><div><div class="eyebrow">${esc(sub)}</div><h1 class="title">${esc(title)}</h1></div><div class="top-actions">${actions}</div></div>`}
+
+function renderDashboard(){
+  syncCurrentWeek();
+  const phase=rehabPhases[phaseForWeek(state.selectedWeek)];const done=[0,1,2,3].filter(i=>completedSession(state.selectedWeek,i)).length;const totalDone=Object.values(state.logs).filter(x=>x.completed).length;
+  const curPhase=rehabPhases[state.currentPhase];const curWeeksIn=state.currentWeek-state.phaseStartWeek+1;const readyForTest=curPhase.next&&curWeeksIn>=curPhase.minWeeks;
+  document.getElementById('dashboardView').innerHTML=pageHead('Tvoj 12-tjedni plan',`Tjedan ${state.selectedWeek} · ${phase.name}`,`<button class="btn" onclick="goToday()">Današnji trening</button>`)+`
+  ${readyForTest?`<div class="notice" style="margin-bottom:18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px" onclick="currentView='criteria';render()"><span>✅ Spreman/na si testirati exit criteria za prelazak u ${esc(rehabPhases[curPhase.next].name)}.</span><span class="btn small">Otvori Faze →</span></div>`:''}
+  <div class="grid cols-4">
+    <div class="card metric"><div class="metric-label">Aktivna faza</div><div class="metric-value">${phase.order}/5</div><div class="metric-note">${esc(phase.name)}</div><div class="progress"><span style="width:${phase.order/5*100}%"></span></div></div>
+    <div class="card metric"><div class="metric-label">Ovaj tjedan</div><div class="metric-value">${done}/4</div><div class="metric-note">završena treninga</div><div class="progress"><span style="width:${done/4*100}%"></span></div></div>
+    <div class="card metric"><div class="metric-label">Ukupno</div><div class="metric-value">${totalDone}/48</div><div class="metric-note">sesija kroz 12 tjedana</div><div class="progress"><span style="width:${totalDone/48*100}%"></span></div></div>
+    <div class="card metric"><div class="metric-label">Pliometrija</div><div class="metric-value">${state.plyoEnabled?'L'+state.plyoLevel:'OFF'}</div><div class="metric-note">${state.plyoEnabled?state.plyoSuccessCount+'/2 uspješna prolaza':'uključi od Mid Stage uz bol <3/10'}</div><div class="progress"><span style="width:${state.plyoEnabled?state.plyoLevel/8*100:0}%"></span></div></div>
+  </div>
+  <div class="section-head"><div><h2>Tjedni</h2><p>Faza se za buduće treninge mijenja tek nakon prolaska exit criteria.</p></div></div>
+  <div class="week-strip">${Array.from({length:12},(_,i)=>{const w=i+1;const wd=[0,1,2,3].every(s=>completedSession(w,s));return `<button class="week-btn ${state.selectedWeek===w?'active':''} ${wd?'done':''}" onclick="selectWeek(${w})">${w}</button>`}).join('')}</div>
+  <div class="section-head"><div><h2>Raspored treninga</h2><p>Rehab pon/sri/pet, upper-only nedjeljom. Između rehab dana ostaje barem jedan dan odmora.</p></div><span class="status-pill">${fmtDate(weekDate(state.selectedWeek,0))} — ${fmtDate(weekDate(state.selectedWeek,6))}</span></div>
+  <div class="grid cols-4">${[0,1,2,3].map(i=>sessionCard(state.selectedWeek,i)).join('')}</div>
+  <div class="section-head"><div><h2>Sigurnosna napomena</h2></div></div><div class="notice">Aplikacija prati plan i progresiju, ali ne procjenjuje medicinsku sigurnost. Kod novog “giving-way” osjećaja, naglog porasta izljeva ili boli koja se ne vraća na početnu razinu, prekini progresiju i provjeri s fizioterapeutom ili ortopedom.</div>`;
+}
+function sessionCard(week,i){const def=sessionDef(i),phase=phaseForWeek(week),rehab=rehabDayForSession(phase,i),upper=upperTemplates[def.upper],done=completedSession(week,i);const preview=[...rehab.slice(0,2).map(x=>x[0]),...upper.slice(0,2).map(x=>x.name)];return `<div class="card session-card"><div style="display:flex;justify-content:space-between;gap:8px"><div class="session-tag">${def.tag}</div><span class="status-pill ${done?'done':''}">${done?'Završeno':'Planirano'}</span></div><h3>${esc(def.name)}</h3><div class="session-date">${fmtDate(weekDate(week,def.offset))}</div><div class="exercise-preview">${preview.map(x=>`<span>• ${esc(x)}</span>`).join('')}<span>+ još ${Math.max(0,rehab.length+upper.length-preview.length)} vježbi</span></div><button class="btn ${done?'':'primary'}" onclick="openSession(${week},${i})">${done?'Otvori zapis':'Pokreni trening'}</button></div>`}
+
+function openSession(week,index){state.selectedWeek=week;state.selectedSession=index;saveState();currentView='workout';render();}
+function selectWeek(w){state.selectedWeek=w;saveState();renderDashboard();}
+function goToday(){const w=computeWeekFromDate();const day=((new Date().getDay()+6)%7);const offsets=[0,2,4,6];let idx=offsets.reduce((best,x,i)=>Math.abs(x-day)<Math.abs(offsets[best]-day)?i:best,0);openSession(w,idx);}
+
+function buildExercises(week,index){const def=sessionDef(index),phase=phaseForWeek(week);const rehab=rehabDayForSession(phase,index).map((x,k)=>({id:`${phase}_d${index}_${k}`,name:x[0],prescription:x[1],tracking:x[2],sets:x[3]||1,optional:!!x[4],kind:'rehab'}));
+  const plyo=(state.plyoEnabled&&index<2&&((phase==='phase4'&&state.plyoLevel<=4)||(phase==='phase5'&&state.plyoLevel>=5)))?plyoLevels[state.plyoLevel].map((x,k)=>({id:`plyo_${state.plyoLevel}_${k}`,name:x[0],prescription:x[1],tracking:'reps',sets:parseSets(x[1]),kind:'plyo'})):[];
+  const upper=upperTemplates[def.upper].map(x=>({...x,kind:'upper',tracking:'reps',prescription:`${x.sets} × ${x.reps}`,targetWeight:targetWeight(x,week,index)}));return [...rehab,...plyo,...upper];}
+function parseSets(s){const m=String(s).match(/(\d+)\s*[×x]/);return m?Number(m[1]):1;}
+function emptySetRows(ex){return Array.from({length:ex.sets||1},(_,i)=>({set:i+1,reps:'',weight:'',done:false}));}
+function renderWorkout(){const week=state.selectedWeek,index=state.selectedSession,def=sessionDef(index),phase=rehabPhases[phaseForWeek(week)],key=sessionKey(week,index);const saved=state.logs[key]||{};const exercises=buildExercises(week,index).map(ex=>{const old=saved.exercises?.find(x=>x.id===ex.id);return {...ex,setsData:old?.sets||emptySetRows(ex)};});
+ document.getElementById('workoutView').innerHTML=pageHead(def.name,`Tjedan ${week} · ${fmtDate(weekDate(week,def.offset))}`,`<button class="btn" onclick="currentView='dashboard';render()">← Plan</button>`)+`
+ <div class="phase-flow" style="margin-bottom:16px"><span class="phase-node active">${esc(phase.name)}</span>${state.plyoEnabled&&index<2?`<span class="phase-arrow">+</span><span class="phase-node">Plyo L${state.plyoLevel}</span>`:''}<span class="phase-arrow">+</span><span class="phase-node">Upper ${def.upper}</span></div>
+ <div class="workout-layout"><div class="grid" id="exerciseList">${exercises.map((ex,i)=>exerciseHTML(ex,i,week,index)).join('')}</div>
+ <aside class="card side-panel"><h3 style="margin-top:0">Sažetak treninga</h3>
+  <div class="form-group"><label>Bol prije treninga (0–10)</label>${rangeHTML('painBefore',saved.painBefore??0)}</div>
+  <div class="form-group"><label>Najviša bol tijekom (0–10)</label>${rangeHTML('painDuring',saved.painDuring??0)}</div>
+  <div class="form-group"><label>Bol odmah nakon (0–10)</label>${rangeHTML('painAfter',saved.painAfter??0)}</div>
+  <div class="form-group"><label>Izljev / oteklina prije (0–3)</label>${rangeHTML('swellingBefore',saved.swellingBefore??0,3)}</div>
+  <div class="form-group"><label>Izljev / oteklina iduće jutro (0–3, opcionalno)</label><input class="field" id="swellingNext" type="number" min="0" max="3" step="1" value="${saved.swellingNext??''}" placeholder="upiši naknadno"></div>
+  <div class="form-group"><label>Bilješka</label><textarea class="field" id="workoutNotes" rows="4" placeholder="Kako se koljeno ponašalo?">${esc(saved.notes||'')}</textarea></div>
+  <div class="summary-box"><strong>Autoregulacija upper-body vježbi:</strong><br>Sve serije na ciljanim ponavljanjima → sljedeći put +2,5 kg za ruke/izolacije ili +5 kg za teže vježbe. Svaki rezultat ispod cilja → težina ostaje ista.</div>
+  <button class="btn primary" style="width:100%" onclick="saveWorkout(true)">Spremi i završi</button><button class="btn" style="width:100%;margin-top:8px" onclick="saveWorkout(false)">Spremi nacrt</button>
+ </aside></div>`;
+}
+function rangeHTML(id,val,max=10){return `<div class="range-line"><input id="${id}" type="range" min="0" max="${max}" step="1" value="${val}" oninput="document.getElementById('${id}Val').textContent=this.value"><div class="range-value" id="${id}Val">${val}</div></div>`}
+function exerciseHTML(ex,i,week,index){const upper=ex.kind==='upper';const target=upper?(ex.targetWeight==null?'—':`${ex.targetWeight} kg${ex.perHand?' / kom':''}`):ex.prescription;return `<article class="card exercise-card" data-ex-index="${i}" data-ex-id="${esc(ex.id)}"><div class="exercise-head"><div><div class="exercise-name">${esc(ex.name)}</div><div class="exercise-meta">${ex.kind==='rehab'?'REHAB':ex.kind==='plyo'?'PLIOMETRIJA':esc(ex.group)} · cilj ${esc(ex.prescription)}${ex.optional?' · opcionalno':''}</div></div><div class="target-chip">${esc(target)}</div></div><div class="sets">${ex.setsData.map((set,si)=>`<div class="set-row"><div class="set-label">Set ${si+1}</div><input class="field reps-input" type="number" min="0" step="1" value="${esc(set.reps)}" placeholder="${ex.tracking==='seconds'?'sek':'pon.'}"><input class="field weight-input" type="number" min="0" step="0.5" value="${esc(set.weight)}" placeholder="kg${upper&&ex.perHand?' / kom':''}"><label class="target-chip"><input class="check done-input" type="checkbox" ${set.done?'checked':''}> ✓</label></div>`).join('')}</div></article>`}
+function saveWorkout(completed){const week=state.selectedWeek,index=state.selectedSession,key=sessionKey(week,index),exDefs=buildExercises(week,index);const cards=[...document.querySelectorAll('#exerciseList .exercise-card')];const exercises=cards.map((card,i)=>{const ex=exDefs[i];const rows=[...card.querySelectorAll('.set-row')];const sets=rows.map((r,j)=>({set:j+1,reps:r.querySelector('.reps-input').value,weight:r.querySelector('.weight-input').value,done:r.querySelector('.done-input').checked}));return {...ex,sets,targetWeight:ex.targetWeight};});
+ const log={week,index,date:dateISO(weekDate(week,sessionDef(index).offset)),completed,completedAt:completed?new Date().toISOString():null,exercises,painBefore:+document.getElementById('painBefore').value,painDuring:+document.getElementById('painDuring').value,painAfter:+document.getElementById('painAfter').value,swellingBefore:+document.getElementById('swellingBefore').value,swellingNext:document.getElementById('swellingNext').value===''?null:+document.getElementById('swellingNext').value,notes:document.getElementById('workoutNotes').value};
+ state.logs[key]=log;saveState();showToast(completed?'Trening je spremljen.':'Nacrt je spremljen.');if(completed){currentView='dashboard';setTimeout(render,450);} }
+
+function renderCriteria(){syncCurrentWeek();const phase=rehabPhases[state.currentPhase];const weeksIn=state.currentWeek-state.phaseStartWeek+1;const timeOk=weeksIn>=phase.minWeeks;document.getElementById('criteriaView').innerHTML=pageHead('Faze i exit criteria',phase.name,`<button class="btn" onclick="openPlyoModal()">Pliometrija</button>`)+`
+ <div class="card"><div class="phase-flow">${['phase2','phase3','phase4','phase5'].map((id,i)=>`${i?'<span class="phase-arrow">→</span>':''}<span class="phase-node ${id===state.currentPhase?'active':''}">${esc(rehabPhases[id].name.replace(' — ',' '))}</span>`).join('')}</div></div>
+ <div class="section-head"><div><h2>${phase.next?'Test za sljedeću fazu':'Završna faza'}</h2><p>${phase.next?`Minimalno trajanje: ${phase.minWeeks} tjedan(a). Trenutno: ${weeksIn}.`:'Na dostavljenim slikama nije prikazan završni exit criteria za Late Stage.'}</p></div></div>
+ ${phase.next?`<div class="card criteria-card"><h3>${timeOk?'Minimalno trajanje zadovoljeno':'Još nije zadovoljeno minimalno trajanje'}</h3><p>Svi kriteriji moraju biti označeni i ne smije biti povećanja boli.</p><div class="criteria-list">${phase.criteria.map(c=>{const isAuto=c.type==='auto';const isPain=c.id.endsWith('_pain');const painInfo=isPain?painDataForCurrentPhase():null;const painAutoChecked=isPain&&painInfo.anyLogged&&!painInfo.anyIncrease;const checked=(isAuto&&timeOk)||painAutoChecked;const disabled=isAuto&&timeOk;let hint;if(isAuto)hint='automatski prema tjednu';else if(isPain)hint=painInfo.anyIncrease?'zabilježen porast boli u ovoj fazi — provjeri prije potvrde':(painInfo.anyLogged?'automatski prema zabilježenim treninzima (možeš promijeniti)':'još nema zabilježenih treninga u ovoj fazi');else hint='upiši rezultat ili potvrdi izvedbu';return `<label class="criterion"><input type="checkbox" class="criteria-check" ${checked?'checked':''} ${disabled?'disabled':''}><div><div class="criterion-name">${esc(c.label)}</div><small>${esc(hint)}</small></div>${isAuto?`<div class="target-chip">${timeOk?'PROLAZ':'ČEKAJ'}</div>`:`<input class="field criteria-value" placeholder="rezultat">`}</label>`;}).join('')}</div><div class="form-group" style="margin-top:15px"><label>Bilješka uz test</label><textarea class="field" id="criteriaNote" rows="3"></textarea></div><button class="btn primary" onclick="advancePhase()">Potvrdi kriterije i prijeđi dalje</button></div>`:`<div class="notice">Late Stage ostaje aktivna završna faza. U ovoj verziji nema automatskog izlaska iz programa jer završni kriteriji nisu bili vidljivi na slikama.</div>`}
+ <div class="section-head"><div><h2>Pliometrijska progresija</h2><p>2× tjedno; napredovanje nakon dva prolaza bez povećanja boli.</p></div></div>${plyoCard()}`;
+}
+function advancePhase(){const phase=rehabPhases[state.currentPhase];if(!phase.next)return;const checks=[...document.querySelectorAll('.criteria-check')];if(checks.some(x=>!x.checked)){alert('Označi sve exit kriterije prije prelaska.');return;}const weeksIn=state.currentWeek-state.phaseStartWeek+1;if(weeksIn<phase.minWeeks){alert('Minimalno trajanje faze još nije zadovoljeno.');return;}state.currentPhase=phase.next;state.phaseStartWeek=Math.min(12,state.currentWeek+1);state.phaseHistory.push({phase:phase.next,week:state.phaseStartWeek,date:new Date().toISOString(),note:document.getElementById('criteriaNote')?.value||''});if(phase.next==='phase4'){state.plyoEnabled=true;state.plyoLevel=Math.min(state.plyoLevel,1);state.plyoSuccessCount=0;}if(phase.next==='phase5'&&state.plyoLevel<5){state.plyoLevel=5;state.plyoSuccessCount=0;}saveState();showToast('Nova faza vrijedi od sljedećeg tjedna.');renderCriteria();}
+function plyoCard(){const allowed=(state.currentPhase==='phase4'&&state.plyoLevel<=4)||(state.currentPhase==='phase5'&&state.plyoLevel>=5);return `<div class="card"><div style="display:flex;justify-content:space-between;gap:15px;align-items:flex-start"><div><div class="eyebrow">${state.plyoEnabled?'Aktivno':'Isključeno'}</div><h3 style="margin:7px 0">Plyo Level ${state.plyoLevel}</h3><div class="muted" style="font-size:13px">${plyoLevels[state.plyoLevel].map(x=>`${esc(x[0])} — ${esc(x[1])}`).join('<br>')}</div></div><span class="status-pill ${allowed?'done':''}">${allowed?'dopušten u fazi':'nije za ovu fazu'}</span></div><div class="summary-box"><strong>Uvjet:</strong> bol mora biti ispod 3/10 i ostati ispod tijekom i nakon treninga. Trenutni broj uspješnih izvedbi: ${state.plyoSuccessCount}/2.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="togglePlyo()">${state.plyoEnabled?'Isključi':'Uključi'}</button><button class="btn primary" onclick="recordPlyoSuccess()" ${!state.plyoEnabled||!allowed?'disabled':''}>Zabilježi uspješan prolaz</button><button class="btn" onclick="recordPlyoPain()" ${!state.plyoEnabled?'disabled':''}>Povećanje boli — reset</button></div></div>`}
+function togglePlyo(){state.plyoEnabled=!state.plyoEnabled;saveState();renderCriteria();}
+function recordPlyoSuccess(){state.plyoSuccessCount++;if(state.plyoSuccessCount>=2){const max=state.currentPhase==='phase4'?4:8;if(state.plyoLevel<max){state.plyoLevel++;state.plyoSuccessCount=0;showToast('Pliometrija je prešla na sljedeću razinu.');}else{state.plyoSuccessCount=2;showToast('Najviša razina za ovu fazu je završena.');}}saveState();renderCriteria();}
+function recordPlyoPain(){state.plyoSuccessCount=0;saveState();renderCriteria();}
+function openPlyoModal(){document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><div class="modal-card"><h2>Pliometrijska pravila</h2><p class="muted">Početak tek od Mid Stage, uz bol ispod 3/10 koja ostaje ispod tijekom i nakon vježbanja. Izvodi se 2× tjedno nakon zagrijavanja i knee-prepa, prije strength dijela. Sljedeća razina tek nakon dvije izvedbe bez povećanja boli. Late Stage razine 5–8 počinju tek u Late Stage fazi.</p><div class="modal-actions"><button class="btn" onclick="closeModal()">Zatvori</button></div></div></div>`}
+function closeModal(){document.getElementById('modalRoot').innerHTML='';}
+
+function trendSVG(rows,series,maxVal){const w=760,h=180,padL=30,padR=14,padT=10,padB=22,innerW=w-padL-padR,innerH=h-padT-padB,n=rows.length;const x=i=>padL+(n===1?0:i*(innerW/(n-1)));const y=v=>padT+innerH-(Math.max(0,Math.min(maxVal,v))/maxVal)*innerH;const step=maxVal<=3?1:2;const gridVals=[];for(let v=0;v<=maxVal;v+=step)gridVals.push(v);const gridLines=gridVals.map(v=>`<line x1="${padL}" y1="${y(v).toFixed(1)}" x2="${w-padR}" y2="${y(v).toFixed(1)}" stroke="#20304d" stroke-width="1"></line><text x="${padL-6}" y="${(y(v)+3).toFixed(1)}" fill="#7186a6" font-size="10" text-anchor="end">${v}</text>`).join('');const paths=series.map(s=>{const pts=rows.map((r,i)=>({i,v:r[s.key]})).filter(p=>p.v!=null&&p.v!=='');if(!pts.length)return'';const d=pts.map((p,k)=>`${k===0?'M':'L'} ${x(p.i).toFixed(1)} ${y(Number(p.v)).toFixed(1)}`).join(' ');const dots=pts.map(p=>`<circle cx="${x(p.i).toFixed(1)}" cy="${y(Number(p.v)).toFixed(1)}" r="2.6" fill="${s.color}"></circle>`).join('');return `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" ${s.faint?'opacity="0.55"':''}></path>${dots}`;}).join('');return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block">${gridLines}${paths}</svg>`;}
+function trendLegend(series){return `<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:12px;color:var(--muted)">${series.map(s=>`<span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${s.color};margin-right:6px"></i>${esc(s.label)}</span>`).join('')}</div>`}
+function trendsCard(){const rows=Object.entries(state.logs).filter(([,l])=>l.completed).map(([,l])=>l).sort((a,b)=>(a.week-b.week)||(a.index-b.index));if(rows.length<2)return `<div class="card"><h3 style="margin-top:0">Trend kroz treninge</h3><div class="empty">Potrebno je barem 2 završena treninga za graf trenda.</div></div>`;
+  const painSeries=[{key:'painBefore',color:'#38bdf8',label:'Bol prije',faint:true},{key:'painDuring',color:'#fbbf24',label:'Bol tijekom'},{key:'painAfter',color:'#fb7185',label:'Bol nakon'}];
+  const swellSeries=[{key:'swellingBefore',color:'#a78bfa',label:'Oteklina prije',faint:true},{key:'swellingNext',color:'#34d399',label:'Oteklina iduće jutro'}];
+  return `<div class="card"><h3 style="margin-top:0">Trend boli</h3><div class="muted" style="font-size:12px;margin-bottom:8px">${rows.length} zabilježenih treninga · skala 0–10</div>${trendSVG(rows,painSeries,10)}${trendLegend(painSeries)}</div>
+ <div class="card" style="margin-top:16px"><h3 style="margin-top:0">Trend otekline</h3><div class="muted" style="font-size:12px;margin-bottom:8px">skala 0–3</div>${trendSVG(rows,swellSeries,3)}${trendLegend(swellSeries)}</div>`;}
+
+function renderHistory(){const rows=Object.entries(state.logs).filter(([,l])=>l.completed).sort((a,b)=>b[1].completedAt.localeCompare(a[1].completedAt));document.getElementById('historyView').innerHTML=pageHead('Povijest treninga','Spremljene sesije',`<button class="btn" onclick="exportData()">Izvezi JSON</button>`)+trendsCard()+`<div class="card table-wrap" style="margin-top:16px">${rows.length?`<table class="history-table"><thead><tr><th>Datum</th><th>Tjedan</th><th>Trening</th><th>Faza</th><th>Bol prije</th><th>Bol tijekom</th><th>Oteklina</th><th></th></tr></thead><tbody>${rows.map(([k,l])=>`<tr><td>${esc(l.date)}</td><td>${l.week}</td><td>${esc(sessionDef(l.index).name)}</td><td>${esc(rehabPhases[phaseForWeek(l.week)].name)}</td><td>${l.painBefore}</td><td>${l.painDuring}</td><td>${l.swellingBefore}</td><td><button class="btn small" onclick="openSession(${l.week},${l.index})">Otvori</button></td></tr>`).join('')}</tbody></table>`:`<div class="empty">Još nema završenih treninga.</div>`}</div>`}
+
+function renderSettings(){document.getElementById('settingsView').innerHTML=pageHead('Postavke programa','Lokalni profil',`<button class="btn" onclick="exportData()">Backup</button>`)+`
+ <div class="grid cols-2"><div class="card"><h3 style="margin-top:0">Osnovno</h3><div class="form-group"><label>Početak 12-tjednog programa</label><input class="field" id="setStart" type="date" value="${esc(state.startDate)}"></div><div class="form-group"><label class="criterion" style="grid-template-columns:24px 1fr;padding:10px 12px"><input type="checkbox" id="setWeekAuto" ${state.weekAutoMode?'checked':''} onchange="document.getElementById('setWeek').disabled=this.checked"><div><div class="criterion-name" style="font-size:13px">Automatski prati tjedan prema datumu</div><small>Isključi ako želiš ručno postaviti tjedan (npr. pauza zbog bolesti)</small></div></label></div><div class="form-group"><label>Trenutni tjedan</label><input class="field" id="setWeek" type="number" min="1" max="12" value="${state.currentWeek}" ${state.weekAutoMode?'disabled':''}></div><div class="form-group"><label>Tjelesna težina (kg)</label><input class="field" id="setBW" type="number" min="20" max="250" step="0.1" value="${state.bodyweight}"></div><div class="form-group"><label>Aktivna rehab faza</label><select class="field" id="setPhase">${Object.values(rehabPhases).map(p=>`<option value="${p.id}" ${p.id===state.currentPhase?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div><button class="btn primary" onclick="saveSettings()">Spremi postavke</button></div>
+ <div class="card"><h3 style="margin-top:0">Podaci</h3><p class="muted">Aplikacija nema korisnički račun ni cloud. Sve se sprema u LocalStorage na ovom uređaju.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="exportData()">Izvezi JSON</button><label class="btn">Uvezi JSON<input type="file" accept="application/json" hidden onchange="importData(event)"></label><button class="btn danger" onclick="resetData()">Obriši sve</button></div><div class="summary-box"><strong>Nedostajući sadržaj:</strong><br>Plyo Level 8 i završni Late Stage exit criteria nisu bili vidljivi na slikama. Aplikacija ih zato ne izmišlja.</div></div></div>
+ <div class="section-head"><div><h2>Upper-body plan</h2><p>Početne težine su prazne. Prvi uneseni rezultat postaje baza za autoregulaciju.</p></div></div><div class="grid cols-2">${Object.entries(upperTemplates).map(([k,v])=>`<div class="card"><div class="eyebrow">Upper ${k}</div><h3>${k==='U'?'Upper-only dan':'Dodatak rehab treningu'}</h3>${v.map(x=>`<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13px"><strong>${esc(x.name)}</strong><br><span class="muted">${x.sets} × ${x.reps} · +${x.increment} kg kad završiš sve serije</span></div>`).join('')}</div>`).join('')}</div>`}
+function saveSettings(){const newPhase=document.getElementById('setPhase').value;state.startDate=document.getElementById('setStart').value;state.weekAutoMode=document.getElementById('setWeekAuto').checked;if(state.weekAutoMode){state.currentWeek=computeWeekFromDate();}else{state.currentWeek=Math.max(1,Math.min(12,+document.getElementById('setWeek').value||1));}state.bodyweight=+document.getElementById('setBW').value||83;if(newPhase!==state.currentPhase){state.currentPhase=newPhase;state.phaseStartWeek=state.currentWeek;state.phaseHistory.push({phase:newPhase,week:state.currentWeek,date:new Date().toISOString(),note:'Ručno promijenjeno u postavkama'});}state.selectedWeek=state.currentWeek;saveState();showToast('Postavke su spremljene.');renderSettings();}
+function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`knee-rehab-backup-${dateISO(new Date())}.json`;a.click();URL.revokeObjectURL(a.href);}
+function importData(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{state=Object.assign(defaultState(),JSON.parse(r.result));saveState();render();showToast('Backup je uvezen.');}catch(err){alert('JSON datoteka nije valjana.')}};r.readAsText(file)}
+function resetData(){if(!confirm('Stvarno obrisati sve treninge i postavke?'))return;state=defaultState();saveState();render();}
+function showToast(msg){const root=document.getElementById('modalRoot');root.innerHTML=`<div style="position:fixed;right:18px;bottom:18px;z-index:200;background:#052e25;color:#d1fae5;border:1px solid #047857;padding:12px 16px;border-radius:12px;font-weight:800;box-shadow:var(--shadow)">${esc(msg)}</div>`;setTimeout(()=>{if(root.textContent.includes(msg))root.innerHTML=''},1800)}
+
+document.addEventListener('click',e=>{const b=e.target.closest('.nav-btn');if(b){currentView=b.dataset.view;render();}});
+render();
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
