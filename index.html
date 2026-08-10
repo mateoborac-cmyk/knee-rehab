@@ -142,12 +142,12 @@ const upperTemplates={
   ],
   B:[
     {id:'incline_db_press',name:'Incline Dumbbell Press',sets:3,reps:10,increment:2.5,group:'Prsa',perHand:true},
-    {id:'neutral_lat_pulldown',name:'Neutral-Grip Lat Pulldown',sets:3,reps:8,increment:5,group:'Leđa'},
+    {id:'pull_up',name:'Zgib (vlastita težina)',sets:3,reps:4,increment:0,group:'Leđa'},
     {id:'preacher_curl',name:'Preacher Curl',sets:3,reps:10,increment:2.5,group:'Biceps'},
     {id:'pallof_press',name:'Pallof Press',sets:3,reps:12,increment:2.5,group:'Trup'}
   ],
   C:[
-    {id:'cable_flys',name:'Cable Swing',sets:3,reps:12,increment:2.5,group:'Prsa'},
+    {id:'cable_flys',name:'Cable Bench Fly',sets:3,reps:12,increment:2.5,group:'Prsa'},
     {id:'seated_cable_row',name:'Seated Cable Row',sets:3,reps:10,increment:5,group:'Leđa'},
     {id:'machine_shoulder_press',name:'Seated Machine Shoulder Press',sets:3,reps:8,increment:5,group:'Ramena'},
     {id:'rope_pushdown',name:'Rope Triceps Pushdown',sets:3,reps:10,increment:2.5,group:'Triceps'}
@@ -155,9 +155,10 @@ const upperTemplates={
   U:[
     {id:'deadlift',name:'Deadlift',sets:3,reps:6,increment:5,group:'Leđa'},
     {id:'machine_chest_press',name:'Incline Bench Press',sets:3,reps:8,increment:5,group:'Prsa'},
-    {id:'cable_flys',name:'Cable Swing',sets:3,reps:12,increment:2.5,group:'Prsa'},
+    {id:'cable_flys',name:'Cable Bench Fly',sets:3,reps:12,increment:2.5,group:'Prsa'},
     {id:'face_pull',name:'Face Pull',sets:3,reps:15,increment:2.5,group:'Ramena (stražnja)'},
-    {id:'preacher_curl',name:'Preacher Curl',sets:3,reps:10,increment:2.5,group:'Biceps'}
+    {id:'oh_triceps_ext',name:'Overhead Triceps Extension (uže)',sets:3,reps:10,increment:2.5,group:'Triceps'},
+    {id:'hanging_leg_raise',name:'Hanging Leg Raise',sets:3,reps:10,increment:2.5,group:'Trup'}
   ]
 };
 
@@ -305,7 +306,7 @@ function renderSettings(){document.getElementById('settingsView').innerHTML=page
  <div class="grid cols-2"><div class="card"><h3 style="margin-top:0">Osnovno</h3><div class="form-group"><label>Početak 12-tjednog programa</label><input class="field" id="setStart" type="date" value="${esc(state.startDate)}"></div><div class="form-group"><label class="criterion" style="grid-template-columns:24px 1fr;padding:10px 12px"><input type="checkbox" id="setWeekAuto" ${state.weekAutoMode?'checked':''} onchange="document.getElementById('setWeek').disabled=this.checked"><div><div class="criterion-name" style="font-size:13px">Automatski prati tjedan prema datumu</div><small>Isključi ako želiš ručno postaviti tjedan (npr. pauza zbog bolesti)</small></div></label></div><div class="form-group"><label>Trenutni tjedan</label><input class="field" id="setWeek" type="number" min="1" max="12" value="${state.currentWeek}" ${state.weekAutoMode?'disabled':''}></div><div class="form-group"><label>Tjelesna težina (kg)</label><input class="field" id="setBW" type="number" min="20" max="250" step="0.1" value="${state.bodyweight}"></div><div class="form-group"><label>Aktivna rehab faza</label><select class="field" id="setPhase">${Object.values(rehabPhases).map(p=>`<option value="${p.id}" ${p.id===state.currentPhase?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div><button class="btn primary" onclick="saveSettings()">Spremi postavke</button></div>
  <div class="card"><h3 style="margin-top:0">Podaci</h3><p class="muted">Aplikacija nema korisnički račun ni cloud. Sve se sprema u LocalStorage na ovom uređaju.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="exportData()">Izvezi JSON</button><label class="btn">Uvezi JSON<input type="file" accept="application/json" hidden onchange="importData(event)"></label><button class="btn danger" onclick="resetData()">Obriši sve</button></div><div class="summary-box"><strong>Napomena:</strong><br>Late Stage je završna faza programa — nema formalnog exit testa, samo nastavak s progresijom pliometrije do Level 8.</div></div></div>
  <div class="section-head"><div><h2>Upper-body plan</h2><p>Početne težine su prazne. Prvi uneseni rezultat postaje baza za autoregulaciju.</p></div></div><div class="grid cols-2">${Object.entries(upperTemplates).map(([k,v])=>`<div class="card"><div class="eyebrow">Upper ${k}</div><h3>${k==='U'?'Upper-only dan':'Dodatak rehab treningu'}</h3>${v.map(x=>`<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13px"><strong>${esc(x.name)}</strong><br><span class="muted">${x.sets} × ${x.reps} · +${x.increment} kg kad završiš sve serije</span></div>`).join('')}</div>`).join('')}</div>`}
-function saveSettings(){const newPhase=document.getElementById('setPhase').value;state.startDate=document.getElementById('setStart').value;state.weekAutoMode=document.getElementById('setWeekAuto').checked;if(state.weekAutoMode){state.currentWeek=computeWeekFromDate();}else{state.currentWeek=Math.max(1,Math.min(12,+document.getElementById('setWeek').value||1));}state.bodyweight=+document.getElementById('setBW').value||83;if(newPhase!==state.currentPhase){state.currentPhase=newPhase;state.phaseStartWeek=state.currentWeek;state.phaseHistory.push({phase:newPhase,week:state.currentWeek,date:new Date().toISOString(),note:'Ručno promijenjeno u postavkama'});}state.selectedWeek=state.currentWeek;saveState();checkAutoAdvance();showToast('Postavke su spremljene.');renderSettings();}
+function saveSettings(){const newPhase=document.getElementById('setPhase').value;const oldPhaseId=state.currentPhase;const oldPhaseName=rehabPhases[oldPhaseId].name;state.startDate=document.getElementById('setStart').value;state.weekAutoMode=document.getElementById('setWeekAuto').checked;if(state.weekAutoMode){state.currentWeek=computeWeekFromDate();}else{state.currentWeek=Math.max(1,Math.min(12,+document.getElementById('setWeek').value||1));}state.bodyweight=+document.getElementById('setBW').value||83;const phaseChanged=newPhase!==oldPhaseId;if(phaseChanged){state.currentPhase=newPhase;state.phaseStartWeek=state.currentWeek;state.phaseHistory.push({phase:newPhase,week:state.currentWeek,date:new Date().toISOString(),note:'Ručno promijenjeno u postavkama'});}state.selectedWeek=state.currentWeek;saveState();checkAutoAdvance();if(phaseChanged){showPhaseUpCelebration(oldPhaseName,rehabPhases[newPhase].name);}else{showToast('Postavke su spremljene.');}renderSettings();}
 function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`knee-rehab-backup-${dateISO(new Date())}.json`;a.click();URL.revokeObjectURL(a.href);}
 function importData(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{state=Object.assign(defaultState(),JSON.parse(r.result));saveState();render();showToast('Backup je uvezen.');}catch(err){alert('JSON datoteka nije valjana.')}};r.readAsText(file)}
 function resetData(){if(!confirm('Stvarno obrisati sve treninge i postavke?'))return;state=defaultState();saveState();render();}
